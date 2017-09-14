@@ -1,0 +1,221 @@
+<html>
+
+<style>
+.cuadro{color:black;  border:2px outset black; 
+text-align: right; width: 110px;}
+.subtitulo{ font-size:20pt;  font-family:Arial; }
+</style>
+
+ <head>
+
+ <script>
+
+
+var btn;
+var input_1="";
+var bool = false;
+var input_2=0.0;
+var input_3=0.0;
+var id_opera;
+
+function funcRestar(a, b) { return a-b; }
+
+function Calculator() {
+}
+
+Calculator.prototype.respuesta = 0;
+
+Calculator.prototype.sumar = function(a, b) {
+  return a + b;
+}
+Calculator.prototype.multi = function(a, b) {
+  return a * b;
+}
+Calculator.prototype.divi = function(a, b) {
+  return a / b;
+}
+
+Calculator.prototype.restar = funcRestar;
+
+Calculator.prototype.createButtons = function() {
+
+
+  var div = document.getElementById("calc");
+  function mostrar(botom){
+    botom.onclick = function(event)
+    {
+
+      calcu = new Calculator();
+      if(bool == false){
+      var tt=0;
+      
+
+      input_1 += this.innerText;
+      input_3 = parseFloat(input_1);
+      
+      for(i=0 ; i<input_1.length;i++)
+        {if(input_1.charAt(i)==".")
+          { tt++;}
+      
+        }
+      bool = (tt>1)? true:false;
+
+
+      document.getElementById("resultado").innerText = input_1;
+      
+
+
+      }
+      else
+      {document.getElementById("resultado").innerText ="Error";}
+
+      if(botom.id=="+")
+      {
+        id_opera=botom.id;
+        input_2 = parseFloat(input_1);
+        input_1="";
+      }
+      if(botom.id=="-")
+      {
+        id_opera=botom.id;
+        input_2 = parseFloat(input_1);
+        input_1="";
+      }
+      if(botom.id=="*")
+      {
+        id_opera=botom.id;
+        input_2 = parseFloat(input_1);
+        input_1="";
+      }
+      if(botom.id=="/")
+      {
+        id_opera=botom.id;
+        input_2 = parseFloat(input_1);
+        input_1="";
+      }
+
+
+      if(botom.id=="=")
+      {
+
+        if(id_opera=="+"){
+
+        input_1 = calcu.sumar(input_2 , input_3);
+        
+        }
+        if(id_opera=="-"){
+
+
+        input_1 = calcu.restar(input_2 , input_3);
+
+        }
+
+        if(id_opera=="*"){
+        input_1 = calcu.multi(input_2 , input_3);}
+        if(id_opera=="/"){
+          
+          
+          input_1 = calcu.divi(input_2 , input_3);
+        }
+
+        if (input_1 - Math.floor(input_1) == 0) {
+        document.getElementById("resultado").innerText =parseFloat(input_1); 
+        }
+        else{
+        document.getElementById("resultado").innerText =parseFloat(input_1).toFixed(2); 
+        }
+        //document.getElementById("resultado").innerText =parseFloat(input_1).toFixed(0); 
+        //document.getElementById("resultado").innerText =parseFloat(input_1); 
+      }
+
+    };
+
+  };
+  
+
+
+  for (var i=9; i>=0; i--) {
+
+
+
+    btn = document.createElement("BUTTON");
+    btn.setAttribute("id",i);
+	  btn.innerText = i;
+  	div.appendChild(btn);
+
+
+
+    mostrar(btn);
+
+    if(i==7){
+      btn3 = document.createElement("BUTTON");
+      btn3.innerHTML = "/";
+      btn3.setAttribute("id","/");
+      div.appendChild(btn3);
+      mostrar(btn3);}
+
+    if(i==4){
+      btn3 = document.createElement("BUTTON");
+      btn3.innerHTML = "*";
+      btn3.setAttribute("id","*");
+      div.appendChild(btn3)
+      mostrar(btn3);}
+   
+    if(i==1){
+      btn3 = document.createElement("BUTTON");
+      btn3.innerHTML = "-";
+      btn3.setAttribute("id","-");
+      div.appendChild(btn3);      
+      mostrar(btn3);}
+    if(i==0){
+      btn3 = document.createElement("BUTTON");
+      btn3.innerHTML = ".";
+      btn3.setAttribute("id",".");
+      div.appendChild(btn3);      
+      mostrar(btn3);}
+
+    if(i==0){
+      btn3 = document.createElement("BUTTON");
+      btn3.innerHTML = "=";
+      btn3.setAttribute("id","=");
+      div.appendChild(btn3);      
+      mostrar(btn3);}
+
+    if(i==0){
+      btn3 = document.createElement("BUTTON");
+      btn3.innerHTML = "+";
+      btn3.setAttribute("id","+");
+      div.appendChild(btn3);      
+      mostrar(btn3);}
+
+    
+
+    
+    }  
+      
+    
+
+}
+
+function main() {
+  var calc = new Calculator();
+  calc.createButtons();
+  
+}
+
+
+
+
+ </script>
+ </head>
+ <body onload="main()"    >
+
+
+<div class =  "cuadro"id ="resultado"; >0</div>
+
+<div id="calc" style="border: 1px ; width: 110px;"></div>
+
+
+
+ </body>
+</html>
