@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dado</title>
+
+
+<style>
+	button{
+		margin-bottom: 8px;
+	}
+	
+	td{
+		width:15px;
+		height:15px;
+	}
+
+	div {
+    width: auto;
+    margin: auto;
+    margin-bottom:15px;
+}
+
+</style>
+
+
+
+<script>
+var uno=0;
+var dos=0;
+function lanzar(){
+	var valor = Math.floor(Math.random()*6);
+	this.uno=valor;
+	var dado = {
+		0:[4],
+		1:[0,8],
+		2:[0,4,8],
+		3:[0,2,6,8],
+		4:[0,2,4,6,8],
+		5:[0,2,3,5,6,8]
+	};
+
+	dibujar(dado[valor]);
+}
+
+function lanzar2(){
+	var valor2 = Math.floor(Math.random()*6);
+	this.dos=valor2;
+	var dado = {
+		0:[4],
+		1:[0,8],
+		2:[0,4,8],
+		3:[0,2,6,8],
+		4:[0,2,4,6,8],
+		5:[0,2,3,5,6,8]
+	};
+	dibujar2(dado[valor2])
+}
+
+
+function dibujar(dado, valor){
+	for(var i=0; i<9 ; i++)
+	{
+		limpiar = document.getElementById(i);
+		limpiar.innerText = "";
+	}
+
+	for(var i=0; i<dado.length; i++)
+	{
+		agregar = document.getElementById(dado[i]);
+		agregar.innerText = "*";
+	}
+}
+
+function dibujar2(dado, valor){
+	for(var i=10; i<19; i++){
+		document.getElementById(i).innerText = "";
+	}
+	for(var i=0; i<dado.length; i++){
+		document.getElementById(dado[i]+10).innerText = "*";
+	}
+}
+
+
+function verR(){
+	lanzar();
+	lanzar2();
+	if(this.uno<this.dos)
+		alert("gano el Jugador Dos");
+	else if(this.uno>this.dos)
+		alert("gano el Jugador Uno");
+	else
+		alert("Hubo Empate");
+	
+}
+
+//verR(this.uno, this.dos);
+</script>
+
+
+
+</head>
+
+
+<body>
+
+<button onclick="lanzar()">Jugador 1</button>
+<table border="1px">
+	<tr>
+		<td id="0"></td>
+		<td id="1"></td>
+		<td id="2"></td>
+	</tr>
+	<tr>
+		<td id="3"></td>
+		<td id="4"></td>
+		<td id="5"></td>
+	</tr>
+	<tr>
+		<td id="6"></td>
+		<td id="7"></td>
+		<td id="8"></td>
+	</tr>
+</table>
+<div ></div>
+<button onclick="lanzar2()">Jugador 2</button>
+<table border="1px">
+	<tr>
+		<td id="10"></td>
+		<td id="11"></td>
+		<td id="12"></td>
+	</tr>
+	<tr>
+		<td id="13"></td>
+		<td id="14"></td>
+		<td id="15"></td>
+	</tr>
+	<tr>
+		<td id="16"></td>
+		<td id="17"></td>
+		<td id="18"></td>
+	</tr>
+</table>
+
+<div ></div>
+<button onclick="verR()">Simular</button>
+
+</body>
+</html>
