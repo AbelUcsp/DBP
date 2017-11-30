@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Proyecto Final</title>
+
+
+ <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+ <script>
+   
+var alumnosPorCodigo = {};
+
+function mostarUsuarios() {
+
+  jQuery.ajax({method: "GET", url: "usuarios.json.php", dataType: 'text'}).done(function( responseText ) {
+
+  var json = JSON.parse(responseText);
+      var html;
+      for (var i=0; i<json.length; i++) {
+
+          html +=  "<tr onclick='window.open(\"http://localhost/Chat_Proyecto_Final/indice.php\" ) ' >  <td>"+ 
+          json[i].nombre + "</td></tr>";
+      
+      alumnosPorCodigo[json[i].nombre] = json[i];
+      }
+      jQuery("#total-u").html(html);
+
+  });
+}
+
+
+
+
+function Registrar(){
+
+  var usuarios = {
+  "nombre": jQuery("#nombre").val(),
+  "password": jQuery("#password").val()
+  };
+
+  jQuery.ajax({method: "POST", url: "registro.json.php", data: JSON.stringify(usuarios), dataType: 'text'}).done(function( responseText ) {
+    //mostarUsuarios();
+
+  });
+
+
+    document.getElementById("resultado").innerText = "Se completo el Registro";
+}
+
+
+function Ingresar(){
+
+  var usuarios = {
+  "nombre": jQuery("#nombrel").val(),
+  "password": jQuery("#passwordl").val()
+  };
+  jQuery.ajax({method: "POST", url: "login.json.php", data: JSON.stringify(usuarios), dataType: 'text'}).done(function( responseText ) {
+    //if(responseText==true)
+        mostarUsuarios();
+    if(!responseText)
+      document.getElementById("resultado").innerText = "Usuario o Contraseña incorrecta";
+
+  });
+    
+}
+
+
+
+ </script>
+
+
+
+</head>
+
+
+
+
+
+
+<body>
+
+
+
+<button onclick="mostarUsuarios()">Usuarios</button>
+
+ <table id="total-u" border="1">
+ </table>
+
+ <h3>Registrar Usuario</h3>
+ <table id="Registrar-usuarios" border="1">
+  <tr><td>apodo</td><td><input id="nombre" /></td></tr>
+  <tr><td>password</td><td><input id="password" /></td></tr>
+ </table>
+<button onclick="Registrar()">Registrar</button>
+
+
+
+ <h3>Ingresar Usuario</h3>
+ <table id="Ingresar-usuarios" border="1">
+  <tr><td>apodo</td><td><input id="nombrel" /></td></tr>
+  <tr><td>password</td><td><input id="passwordl" /></td></tr>
+ </table>
+<button onclick="Ingresar()">Ingresar</button>
+
+
+<h3 id="resultado"></h3>
+</body>
+</html>
